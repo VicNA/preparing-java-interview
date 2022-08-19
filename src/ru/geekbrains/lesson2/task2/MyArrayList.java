@@ -9,36 +9,48 @@ public class MyArrayList<E> {
     private Object[] elementData;
     private int size;
 
+    public MyArrayList() {
+        elementData = new Object[DEFAULT_CAPACITY];
+    }
+
+    public MyArrayList(int initCapacity) {
+        if (initCapacity >= 0) {
+            elementData = new Object[initCapacity];
+        } else {
+            throw new IllegalArgumentException("Illegal Capacity: " + initCapacity);
+        }
+    }
+
     private void add(E e, Object[] elementData, int s) {
-        if (s == elementData.length)
+        if (s == elementData.length) {
             elementData = grow();
+        }
         elementData[s] = e;
         size = s + 1;
     }
 
     public boolean add(E e) {
-        modCount++;
         add(e, elementData, size);
         return true;
     }
 
     public void add(int index, E element) {
-        rangeCheckForAdd(index);
-        modCount++;
-        final int s;
-        Object[] elementData;
-        if ((s = size) == (elementData = this.elementData).length)
+        if (index > size || index < 0) {
+            throw new IndexOutOfBoundsException("Index: " + index + ", Size: " + size);
+        }
+
+        final int s = size;
+        Object[] elementData = this.elementData;
+        if (s == elementData.length) {
             elementData = grow();
-        System.arraycopy(elementData, index,
-                elementData, index + 1,
-                s - index);
+        }
+        System.arraycopy(elementData, index, elementData, index + 1, s - index);
         elementData[index] = element;
         size = s + 1;
     }
 
     private Object[] grow(int minCapacity) {
-        return elementData = Arrays.copyOf(elementData,
-                newCapacity(minCapacity));
+        return elementData = Arrays.copyOf(elementData, newCapacity(minCapacity));
     }
 
     private Object[] grow() {
@@ -46,22 +58,18 @@ public class MyArrayList<E> {
     }
 
     private int newCapacity(int minCapacity) {
-        // overflow-conscious code
         int oldCapacity = elementData.length;
         int newCapacity = oldCapacity + (oldCapacity >> 1);
         if (newCapacity - minCapacity <= 0) {
-            if (elementData == DEFAULTCAPACITY_EMPTY_ELEMENTDATA)
-                return Math.max(DEFAULT_CAPACITY, minCapacity);
-            if (minCapacity < 0) // overflow
+            if (minCapacity < 0) {
                 throw new OutOfMemoryError();
-            return minCapacity;
+            }
+            return Math.max(DEFAULT_CAPACITY, minCapacity);
         }
-        return (newCapacity - MAX_ARRAY_SIZE <= 0)
-                ? newCapacity
-                : hugeCapacity(minCapacity);
+        return newCapacity;
     }
 
-    E elementData(int index) {
+    private E elementData(int index) {
         return (E) elementData[index];
     }
 
@@ -79,7 +87,7 @@ public class MyArrayList<E> {
         final Object[] es = elementData;
 
         @SuppressWarnings("unchecked") E oldValue = (E) es[index];
-        fastRemove(es, index);
+        remove(es, index);
 
         return oldValue;
     }
@@ -88,7 +96,8 @@ public class MyArrayList<E> {
         final Object[] es = elementData;
         final int size = this.size;
         int i = 0;
-        found: {
+        found:
+        {
             if (o == null) {
                 for (; i < size; i++)
                     if (es[i] == null)
@@ -100,8 +109,17 @@ public class MyArrayList<E> {
             }
             return false;
         }
-        fastRemove(es, i);
+        remove(es, i);
         return true;
+    }
+
+    private void remove(Object[] el, int index) {
+        final int newSize = size - 1;
+        if (newSize > index) {
+            System.arraycopy(el, index + 1, el, index, newSize - index);
+        }
+        size = newSize;
+        el[size] = null;
     }
 
     public E set(int index, E element) {
@@ -113,5 +131,9 @@ public class MyArrayList<E> {
 
     public int size() {
         return size;
+    }
+
+    public Object[] toArray() {
+        return Arrays.copyOf(elementData, size);
     }
 }
