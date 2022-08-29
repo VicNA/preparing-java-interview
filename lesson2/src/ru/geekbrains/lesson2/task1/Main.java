@@ -1,7 +1,5 @@
 package ru.geekbrains.lesson2.task1;
 
-import ru.geekbrains.lesson2.task2.MyArrayList;
-
 import java.util.Arrays;
 
 public class Main {
