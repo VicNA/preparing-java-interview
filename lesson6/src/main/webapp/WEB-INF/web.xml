@@ -5,13 +5,13 @@
 <web-app>
     <display-name>Archetype Created Web Application</display-name>
 
-<!--    <servlet>-->
-<!--        <servlet-name>hello</servlet-name>-->
-<!--        <servlet-class>ru.geekbrains.lesson6.MainServlet</servlet-class>-->
-<!--    </servlet>-->
+    <servlet>
+        <servlet-name>hello</servlet-name>
+        <servlet-class>ru.geekbrains.lesson6.MainServlet</servlet-class>
+    </servlet>
 
-<!--    <servlet-mapping>-->
-<!--        <servlet-name>hello</servlet-name>-->
-<!--        <url-pattern>/hello</url-pattern>-->
-<!--    </servlet-mapping>-->
+    <servlet-mapping>
+        <servlet-name>hello</servlet-name>
+        <url-pattern>/hello</url-pattern>
+    </servlet-mapping>
 </web-app>

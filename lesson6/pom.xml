@@ -31,7 +31,7 @@
                 <configuration>
                     <url>http://localhost:8080/manager/text</url>
                     <server>TomcatServer</server>
-                    <path>/lesson6</path>
+                    <path>/</path>
                 </configuration>
             </plugin>
         </plugins>
