@@ -26,8 +26,8 @@ public class StudentService {
         return students;
     }
 
-    public void saveOrUpdate(Student student) {
-        studentRepository.save(student);
+    public Student saveOrUpdate(Student student) {
+        return studentRepository.save(student);
     }
 
     public void deleteStudentById(Long id) {
